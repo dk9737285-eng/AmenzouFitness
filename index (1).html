@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amenzou Fitness</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<style>
+:root {
+    --red: #ff1e1e;
+    --red-dark: #cc0000;
+    --bg: #0a0a0a;
+    --card: #141414;
+    --card2: #1c1c1c;
+    --border: rgba(255,255,255,0.07);
+    --text: #ffffff;
+    --muted: #888;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* ===== NAVBAR ===== */
+header {
+    position: fixed;
+    width: 100%;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(14px);
+    padding: 16px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--red);
+}
+
+nav { display: flex; gap: 4px; }
+
+nav button {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 6px;
+    transition: all 0.2s;
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+nav button:hover { color: white; }
+
+nav button.active {
+    color: white;
+}
+
+nav button.active::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: var(--red);
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 2px;
+    border-radius: 2px;
+}
+
+.lang-btn {
+    background: var(--red);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+}
+.lang-btn:hover { background: var(--red-dark); }
+
+/* ===== SECTIONS ===== */
+.section {
+    min-height: 100vh;
+    padding: 110px 48px 60px;
+    display: none;
+    animation: fadeUp 0.5s ease;
+}
+.active-section { display: block; }
+
+@keyframes fadeUp {
+    from { opacity:0; transform:translateY(24px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+
+/* ===== HERO ===== */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.72)),
+        url('https://images.unsplash.com/photo-1558611848-73f7eb4001a1?w=1400') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 90px;
+    line-height: 1;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+}
+
+.hero h1 span { color: var(--red); }
+
+.hero p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.75);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+}
+
+.hero-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+}
+.hero-btn:hover { background: var(--red-dark); transform: translateY(-2px); }
+
+/* ===== PROGRAMS ===== */
+.section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}
+.section-title span { color: var(--red); }
+.section-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 40px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 32px 28px;
+    border-radius: 14px;
+    transition: all 0.3s;
+    cursor: default;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    border-color: var(--red);
+    box-shadow: 0 12px 40px rgba(255,30,30,0.15);
+}
+
+.card-icon { font-size: 36px; margin-bottom: 16px; }
+.card h3 { font-size: 18px; margin-bottom: 8px; }
+.card p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+/* ===== PRICING ===== */
+.pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.pricing-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 36px 28px;
+    border-radius: 14px;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-card.featured {
+    border-color: var(--red);
+    background: #1a0a0a;
+}
+
+.pricing-card.featured::before {
+    content: "POPULAR";
+    position: absolute;
+    top: 18px; right: -28px;
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 40px;
+    transform: rotate(45deg);
+    letter-spacing: 1px;
+}
+
+.pricing-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(255,30,30,0.12);
+}
+
+.price-label { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+.price-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--red);
+    line-height: 1;
+}
+.price-period { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+.price-name { font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+.price-features { list-style: none; margin-bottom: 28px; }
+.price-features li {
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+}
+.price-features li:last-child { border: none; }
+
+.pricing-btn {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--red);
+    background: transparent;
+    color: var(--red);
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+}
+.pricing-card.featured .pricing-btn {
+    background: var(--red);
+    color: white;
+}
+.pricing-btn:hover {
+    background: var(--red);
+    color: white;
+}
+
+/* ===== CONTACT / SIGNUP ===== */
+.contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-top: 20px;
+}
+
+.contact-info h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 3px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+.contact-info h2 span { color: var(--red); }
+.contact-info p { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 30px; }
+
+.contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+.contact-detail:last-child { border: none; }
+.contact-icon {
+    width: 38px; height: 38px;
+    background: rgba(255,30,30,0.12);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+}
+
+/* Signup form box */
+.signup-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 36px;
+}
+
+.signup-box h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+.signup-box h3 span { color: var(--red); }
+.signup-box .form-desc { color: var(--muted); font-size: 13px; margin-bottom: 28px; }
+
+/* Step indicators */
+.steps {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+}
+.step-dot {
+    height: 4px;
+    flex: 1;
+    background: var(--border);
+    border-radius: 4px;
+    transition: background 0.4s;
+}
+.step-dot.active { background: var(--red); }
+
+/* Form fields */
+.field { margin-bottom: 18px; }
+.field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+.field input {
+    width: 100%;
+    padding: 13px 16px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.2s;
+}
+.field input:focus {
+    outline: none;
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(255,30,30,0.1);
+}
+.field input.ok   { border-color: #22c55e; }
+.field input.bad  { border-color: var(--red); }
+
+/* OTP input */
+.otp-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+.otp-cell {
+    flex: 1;
+    height: 54px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    transition: all 0.2s;
+}
+.otp-cell:focus {
+    outline: none;
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(255,30,30,0.12);
+}
+.otp-cell.filled { border-color: #22c55e; color: #22c55e; }
+
+.submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+}
+.submit-btn:hover:not(:disabled) {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255,30,30,0.3);
+}
+.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.resend-row {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--muted);
+}
+.resend-link {
+    color: var(--red);
+    cursor: pointer;
+    font-weight: 600;
+    background: none;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+}
+.resend-link:disabled { color: var(--muted); cursor: not-allowed; }
+
+/* Alert messages */
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-top: 14px;
+    display: none;
+    animation: fadeUp 0.3s ease;
+}
+.alert.show { display: block; }
+.alert.success { background: rgba(34,197,94,0.12); border:1px solid #22c55e; color:#22c55e; }
+.alert.error   { background: rgba(255,30,30,0.12);  border:1px solid var(--red); color:#ff6b6b; }
+.alert.info    { background: rgba(59,130,246,0.12); border:1px solid #3b82f6; color:#93c5fd; }
+
+/* Spinner */
+.spinner {
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== SUCCESS STATE ===== */
+.success-state {
+    text-align: center;
+    padding: 20px 0;
+    display: none;
+}
+.success-circle {
+    width: 80px; height: 80px;
+    background: rgba(34,197,94,0.12);
+    border: 2px solid #22c55e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 20px;
+    animation: scaleIn 0.5s ease;
+}
+@keyframes scaleIn { from{transform:scale(0);} to{transform:scale(1);} }
+.success-state h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+.success-state h4 span { color: #22c55e; }
+.success-state p { color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+/* ===== FOOTER ===== */
+footer {
+    background: #050505;
+    padding: 24px 48px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .contact-wrapper { grid-template-columns: 1fr; gap: 40px; }
+    .hero h1 { font-size: 60px; }
+}
+@media (max-width: 600px) {
+    header { padding: 14px 20px; flex-wrap: wrap; gap: 10px; }
+    .section { padding: 100px 20px 50px; }
+    .hero h1 { font-size: 46px; }
+    .signup-box { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+    <div class="logo">💪 AMENZOU FITNESS</div>
+    <nav>
+        <button onclick="showSection('home')"     id="nav-home">Home</button>
+        <button onclick="showSection('programs')" id="nav-programs">Programs</button>
+        <button onclick="showSection('pricing')"  id="nav-pricing">Pricing</button>
+        <button onclick="showSection('contact')"  id="nav-contact">Contact</button>
+    </nav>
+    <button class="lang-btn" onclick="toggleLanguage()" id="lang-btn">AR</button>
+</header>
+
+<!-- ===== HOME ===== -->
+<section id="home" class="section hero active-section">
+    <h1 id="home-title">TRAIN HARD.<br><span>STAY STRONG.</span></h1>
+    <p id="home-text">Welcome to Amenzou Fitness. Your transformation starts today.</p>
+    <button class="hero-btn" onclick="showSection('contact')" id="hero-cta">JOIN NOW</button>
+</section>
+
+<!-- ===== PROGRAMS ===== -->
+<section id="programs" class="section">
+    <div class="section-title" id="programs-title">OUR <span>PROGRAMS</span></div>
+    <div class="section-sub" id="programs-sub">Choose the path that fits your goal</div>
+    <div class="cards">
+        <div class="card">
+            <div class="card-icon">💪</div>
+            <h3 id="p1-title">Bodybuilding</h3>
+            <p id="p1-desc">Sculpt your physique with structured strength programs.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🔥</div>
+            <h3 id="p2-title">CrossFit</h3>
+            <p id="p2-desc">Push your limits with functional high-intensity training.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🏃</div>
+            <h3 id="p3-title">Cardio</h3>
+            <p id="p3-desc">Boost endurance, burn fat and improve heart health.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🥗</div>
+            <h3 id="p4-title">Nutrition</h3>
+            <p id="p4-desc">Custom meal plans to fuel your performance and recovery.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section id="pricing" class="section">
+    <div class="section-title" id="pricing-title">MEMBERSHIP <span>PLANS</span></div>
+    <div class="section-sub" id="pricing-sub">No hidden fees. Cancel anytime.</div>
+    <div class="pricing-cards">
+        <div class="pricing-card">
+            <div class="price-label" id="pl-basic">BASIC</div>
+            <div class="price-amount">25</div>
+            <div class="price-period" id="pp-mo">/month</div>
+            <ul class="price-features">
+                <li id="pf1-1">Gym Access</li>
+                <li id="pf1-2">Locker Room</li>
+                <li id="pf1-3">2 Classes/Week</li>
+            </ul>
+            <button class="pricing-btn" onclick="showSection('contact')" id="pb1">GET STARTED</button>
+        </div>
+        <div class="pricing-card featured">
+            <div class="price-label" id="pl-std">STANDARD</div>
+            <div class="price-amount">40</div>
+            <div class="price-period" id="pp-mo2">/month</div>
+            <ul class="price-features">
+                <li id="pf2-1">Unlimited Access</li>
+                <li id="pf2-2">All Classes</li>
+                <li id="pf2-3">1 PT Session/Month</li>
+                <li id="pf2-4">Nutrition Guide</li>
+            </ul>
+            <button class="pricing-btn" onclick="showSection('contact')" id="pb2">GET STARTED</button>
+        </div>
+        <div class="pricing-card">
+            <div class="price-label" id="pl-prem">PREMIUM</div>
+            <div class="price-amount">60</div>
+            <div class="price-period" id="pp-mo3">/month</div>
+            <ul class="price-features">
+                <li id="pf3-1">Everything in Standard</li>
+                <li id="pf3-2">4 PT Sessions/Month</li>
+                <li id="pf3-3">Custom Meal Plan</li>
+                <li id="pf3-4">Priority Booking</li>
+            </ul>
+            <button class="pricing-btn" onclick="showSection('contact')" id="pb3">GET STARTED</button>
+        </div>
+    </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="section">
+    <div class="contact-wrapper">
+
+        <!-- Left: Info -->
+        <div class="contact-info">
+            <h2 id="contact-title">JOIN <span>US</span><br>TODAY</h2>
+            <p id="contact-text">Sign up and we'll verify your email instantly. You'll receive exclusive updates and offers from Amenzou Fitness.</p>
+            <div class="contact-detail">
+                <div class="contact-icon">📧</div>
+                <span>info@amenzoufitness.com</span>
+            </div>
+            <div class="contact-detail">
+                <div class="contact-icon">📞</div>
+                <span>+212 600 000 000</span>
+            </div>
+            <div class="contact-detail">
+                <div class="contact-icon">📍</div>
+                <span>Casablanca, Morocco</span>
+            </div>
+        </div>
+
+        <!-- Right: Signup + Verification Form -->
+        <div class="signup-box">
+
+            <!-- Step progress dots -->
+            <div class="steps">
+                <div class="step-dot active" id="dot1"></div>
+                <div class="step-dot" id="dot2"></div>
+                <div class="step-dot" id="dot3"></div>
+            </div>
+
+            <!-- STEP 1: Name + Email -->
+            <div id="step1">
+                <h3><span id="s1-title">SIGN</span> UP</h3>
+                <p class="form-desc" id="s1-desc">Enter your details to receive your verification code</p>
+
+                <div class="field">
+                    <label id="label-name">FULL NAME</label>
+                    <input type="text" id="inp-name" placeholder="John Doe" autocomplete="off">
+                </div>
+                <div class="field">
+                    <label id="label-email">EMAIL ADDRESS</label>
+                    <input type="email" id="inp-email" placeholder="john@example.com" autocomplete="off">
+                </div>
+
+                <button class="submit-btn" id="btn-send" onclick="sendCode()">
+                    <span id="btn-send-text">SEND VERIFICATION CODE</span>
+                </button>
+                <div class="alert" id="alert1"></div>
+            </div>
+
+            <!-- STEP 2: OTP Verification -->
+            <div id="step2" style="display:none">
+                <h3><span id="s2-title">VERIFY</span> CODE</h3>
+                <p class="form-desc" id="s2-desc">Enter the 6-digit code sent to your email</p>
+
+                <div class="otp-row">
+                    <input class="otp-cell" type="text" maxlength="1" id="otp0" inputmode="numeric">
+                    <input class="otp-cell" type="text" maxlength="1" id="otp1" inputmode="numeric">
+                    <input class="otp-cell" type="text" maxlength="1" id="otp2" inputmode="numeric">
+                    <input class="otp-cell" type="text" maxlength="1" id="otp3" inputmode="numeric">
+                    <input class="otp-cell" type="text" maxlength="1" id="otp4" inputmode="numeric">
+                    <input class="otp-cell" type="text" maxlength="1" id="otp5" inputmode="numeric">
+                </div>
+
+                <button class="submit-btn" id="btn-verify" onclick="verifyCode()">
+                    <span id="btn-verify-text">VERIFY & COMPLETE</span>
+                </button>
+                <div class="alert" id="alert2"></div>
+
+                <div class="resend-row">
+                    <span id="resend-label">Didn't get it? </span>
+                    <button class="resend-link" id="resend-btn" onclick="resendCode()" disabled>
+                        <span id="resend-text">Resend in 30s</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Success -->
+            <div class="success-state" id="step3">
+                <div class="success-circle">✓</div>
+                <h4><span id="s3-title">WELCOME</span> ABOARD!</h4>
+                <p id="s3-desc">Your email has been verified. You're now part of the Amenzou Fitness community. Check your inbox for a welcome message!</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer id="footer-text">© 2026 Amenzou Fitness</footer>
+
+<!-- ===== SCRIPT ===== -->
+<script>
+// =============================================
+// ⚙️  EMAILJS CONFIGURATION
+// Follow steps in the setup guide to get these
+// =============================================
+const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // e.g. 'service_abc123'
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // e.g. 'template_xyz456'
+const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // e.g. 'abcDEF123456'
+// =============================================
+
+// Init EmailJS
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
+// ===== STATE =====
+let generatedCode = '';
+let resendTimer = null;
+let resendSeconds = 30;
+let currentName  = '';
+let currentEmail = '';
+
+// ===== LANGUAGE =====
+let currentLang = localStorage.getItem('lang') || 'en';
+
+const t = {
+    en: {
+        langBtn:'AR', dir:'ltr',
+        navHome:'Home', navPrograms:'Programs', navPricing:'Pricing', navContact:'Contact',
+        homeTitle:'TRAIN HARD.<br><span>STAY STRONG.</span>',
+        homeText:'Welcome to Amenzou Fitness. Your transformation starts today.',
+        heroCta:'JOIN NOW',
+        programsTitle:'OUR <span>PROGRAMS</span>', programsSub:'Choose the path that fits your goal',
+        p1:'Bodybuilding', p1d:'Sculpt your physique with structured strength programs.',
+        p2:'CrossFit', p2d:'Push your limits with functional high-intensity training.',
+        p3:'Cardio', p3d:'Boost endurance, burn fat and improve heart health.',
+        p4:'Nutrition', p4d:'Custom meal plans to fuel your performance and recovery.',
+        pricingTitle:'MEMBERSHIP <span>PLANS</span>', pricingSub:'No hidden fees. Cancel anytime.',
+        plBasic:'BASIC', plStd:'STANDARD', plPrem:'PREMIUM', ppMo:'/month',
+        pf1:['Gym Access','Locker Room','2 Classes/Week'],
+        pf2:['Unlimited Access','All Classes','1 PT Session/Month','Nutrition Guide'],
+        pf3:['Everything in Standard','4 PT Sessions/Month','Custom Meal Plan','Priority Booking'],
+        pbtn:'GET STARTED',
+        contactTitle:'JOIN <span>US</span><br>TODAY',
+        contactText:'Sign up and we\'ll verify your email instantly. You\'ll receive exclusive updates and offers from Amenzou Fitness.',
+        s1Title:'SIGN UP', s1Desc:'Enter your details to receive your verification code',
+        labelName:'FULL NAME', labelEmail:'EMAIL ADDRESS',
+        btnSend:'SEND VERIFICATION CODE', btnSending:'SENDING...',
+        s2Title:'VERIFY CODE', s2Desc:'Enter the 6-digit code sent to your email',
+        btnVerify:'VERIFY & COMPLETE', btnVerifying:'VERIFYING...',
+        s3Title:'WELCOME', s3Desc:'Your email has been verified. You\'re now part of the Amenzou Fitness community. Check your inbox for a welcome message!',
+        resendLabel:'Didn\'t get it? ', resendWait:'Resend in {s}s', resendNow:'Resend Code',
+        errName:'Please enter your full name.', errEmail:'Please enter a valid email address.',
+        errConfig:'EmailJS is not configured yet. Please read the setup guide.',
+        errSend:'Failed to send the code. Please try again.',
+        infoSent:'Code sent! Check your inbox (and spam folder).',
+        errCode:'Please fill in all 6 digits.', errWrong:'Incorrect code. Please try again.',
+        footer:'© 2026 Amenzou Fitness'
+    },
+    ar: {
+        langBtn:'FR', dir:'rtl',
+        navHome:'الرئيسية', navPrograms:'البرامج', navPricing:'الأسعار', navContact:'اتصل بنا',
+        homeTitle:'تدرّب بقوة.<br><span>وابقَ قويًا.</span>',
+        homeText:'مرحبًا بكم في أمينزو فيتنس. رحلتك تبدأ اليوم.',
+        heroCta:'انضم الآن',
+        programsTitle:'<span>برامجنا</span>', programsSub:'اختر المسار الذي يناسب هدفك',
+        p1:'بناء الجسم', p1d:'انحت جسمك مع برامج القوة المنظمة.',
+        p2:'كروس فيت', p2d:'تجاوز حدودك مع التدريب الوظيفي عالي الكثافة.',
+        p3:'كارديو', p3d:'تحسين التحمل وحرق الدهون وتعزيز صحة القلب.',
+        p4:'التغذية', p4d:'خطط وجبات مخصصة لتغذية أدائك وتعافيك.',
+        pricingTitle:'<span>خطط</span> الاشتراك', pricingSub:'بدون رسوم خفية. إلغاء في أي وقت.',
+        plBasic:'أساسي', plStd:'معياري', plPrem:'بريميوم', ppMo:'/شهر',
+        pf1:['دخول الصالة','غرفة التخزين','حصتان أسبوعياً'],
+        pf2:['وصول غير محدود','جميع الحصص','جلسة تدريب شخصي','دليل التغذية'],
+        pf3:['كل شيء في المعياري','4 جلسات تدريب/شهر','خطة وجبات مخصصة','حجز أولوية'],
+        pbtn:'ابدأ الآن',
+        contactTitle:'انضم <span>إلينا</span><br>اليوم',
+        contactText:'سجل وسنتحقق من بريدك الإلكتروني فورًا. ستتلقى تحديثات وعروضًا حصرية من أمينزو فيتنس.',
+        s1Title:'التسجيل', s1Desc:'أدخل بياناتك لتلقي رمز التحقق',
+        labelName:'الاسم الكامل', labelEmail:'البريد الإلكتروني',
+        btnSend:'إرسال رمز التحقق', btnSending:'جارٍ الإرسال...',
+        s2Title:'رمز التحقق', s2Desc:'أدخل الرمز المكوّن من 6 أرقام المرسل إلى بريدك',
+        btnVerify:'تحقق وأكمل', btnVerifying:'جارٍ التحقق...',
+        s3Title:'أهلاً', s3Desc:'تم التحقق من بريدك الإلكتروني. أنت الآن جزء من مجتمع أمينزو فيتنس. تحقق من صندوق الوارد للحصول على رسالة ترحيبية!',
+        resendLabel:'لم تستلمه؟ ', resendWait:'إعادة الإرسال خلال {s}ث', resendNow:'إعادة إرسال الرمز',
+        errName:'الرجاء إدخال اسمك الكامل.', errEmail:'الرجاء إدخال بريد إلكتروني صالح.',
+        errConfig:'لم يتم إعداد EmailJS بعد. يرجى قراءة دليل الإعداد.',
+        errSend:'فشل إرسال الرمز. يرجى المحاولة مرة أخرى.',
+        infoSent:'تم إرسال الرمز! تحقق من صندوق الوارد (والبريد العشوائي).',
+        errCode:'الرجاء ملء جميع الأرقام الستة.', errWrong:'الرمز غير صحيح. يرجى المحاولة مرة أخرى.',
+        footer:'© 2026 أمينزو فيتنس'
+    },
+    fr: {
+        langBtn:'EN', dir:'ltr',
+        navHome:'Accueil', navPrograms:'Programmes', navPricing:'Tarifs', navContact:'Contact',
+        homeTitle:'ENTRAÎNEZ-VOUS DUR.<br><span>RESTEZ FORT.</span>',
+        homeText:'Bienvenue à Amenzou Fitness. Votre transformation commence aujourd\'hui.',
+        heroCta:'REJOINDRE',
+        programsTitle:'NOS <span>PROGRAMMES</span>', programsSub:'Choisissez le parcours adapté à votre objectif',
+        p1:'Musculation', p1d:'Sculptez votre physique avec des programmes de force structurés.',
+        p2:'CrossFit', p2d:'Dépassez vos limites avec un entraînement fonctionnel intensif.',
+        p3:'Cardio', p3d:'Améliorez l\'endurance, brûlez les graisses et renforcez votre cœur.',
+        p4:'Nutrition', p4d:'Plans de repas personnalisés pour optimiser vos performances.',
+        pricingTitle:'PLANS <span>D\'ABONNEMENT</span>', pricingSub:'Sans frais cachés. Annulez à tout moment.',
+        plBasic:'BASIQUE', plStd:'STANDARD', plPrem:'PREMIUM', ppMo:'/mois',
+        pf1:['Accès Salle','Vestiaires','2 Cours/Semaine'],
+        pf2:['Accès Illimité','Tous les Cours','1 Séance PT/Mois','Guide Nutrition'],
+        pf3:['Tout du Standard','4 Séances PT/Mois','Plan Repas Personnalisé','Réservation Prioritaire'],
+        pbtn:'COMMENCER',
+        contactTitle:'REJOIGNEZ-<span>NOUS</span><br>AUJOURD\'HUI',
+        contactText:'Inscrivez-vous et nous vérifierons votre email instantanément. Vous recevrez des mises à jour et offres exclusives.',
+        s1Title:'S\'INSCRIRE', s1Desc:'Entrez vos informations pour recevoir votre code de vérification',
+        labelName:'NOM COMPLET', labelEmail:'ADRESSE E-MAIL',
+        btnSend:'ENVOYER LE CODE', btnSending:'ENVOI EN COURS...',
+        s2Title:'CODE DE VÉRIFICATION', s2Desc:'Entrez le code à 6 chiffres envoyé à votre adresse e-mail',
+        btnVerify:'VÉRIFIER ET TERMINER', btnVerifying:'VÉRIFICATION...',
+        s3Title:'BIENVENUE', s3Desc:'Votre e-mail a été vérifié. Vous faites maintenant partie de la communauté Amenzou Fitness. Vérifiez votre boîte de réception!',
+        resendLabel:'Pas reçu? ', resendWait:'Renvoyer dans {s}s', resendNow:'Renvoyer le code',
+        errName:'Veuillez entrer votre nom complet.', errEmail:'Veuillez entrer une adresse e-mail valide.',
+        errConfig:'EmailJS n\'est pas encore configuré. Veuillez lire le guide d\'installation.',
+        errSend:'Échec de l\'envoi du code. Veuillez réessayer.',
+        infoSent:'Code envoyé! Vérifiez votre boîte de réception (et les spams).',
+        errCode:'Veuillez remplir les 6 chiffres.', errWrong:'Code incorrect. Veuillez réessayer.',
+        footer:'© 2026 Amenzou Fitness'
+    }
+};
+
+function getLang() { return t[currentLang]; }
+
+function applyLanguage() {
+    const l = getLang();
+    document.body.dir = l.dir;
+
+    document.getElementById('lang-btn').innerText       = l.langBtn;
+    document.getElementById('nav-home').innerText       = l.navHome;
+    document.getElementById('nav-programs').innerText   = l.navPrograms;
+    document.getElementById('nav-pricing').innerText    = l.navPricing;
+    document.getElementById('nav-contact').innerText    = l.navContact;
+
+    document.getElementById('home-title').innerHTML  = l.homeTitle;
+    document.getElementById('home-text').innerText   = l.homeText;
+    document.getElementById('hero-cta').innerText    = l.heroCta;
+
+    document.getElementById('programs-title').innerHTML = l.programsTitle;
+    document.getElementById('programs-sub').innerText   = l.programsSub;
+    document.getElementById('p1-title').innerText = l.p1; document.getElementById('p1-desc').innerText = l.p1d;
+    document.getElementById('p2-title').innerText = l.p2; document.getElementById('p2-desc').innerText = l.p2d;
+    document.getElementById('p3-title').innerText = l.p3; document.getElementById('p3-desc').innerText = l.p3d;
+    document.getElementById('p4-title').innerText = l.p4; document.getElementById('p4-desc').innerText = l.p4d;
+
+    document.getElementById('pricing-title').innerHTML = l.pricingTitle;
+    document.getElementById('pricing-sub').innerText   = l.pricingSub;
+    document.getElementById('pl-basic').innerText = l.plBasic;
+    document.getElementById('pl-std').innerText   = l.plStd;
+    document.getElementById('pl-prem').innerText  = l.plPrem;
+    ['pp-mo','pp-mo2','pp-mo3'].forEach(id => document.getElementById(id).innerText = l.ppMo);
+    l.pf1.forEach((v,i) => document.getElementById(`pf1-${i+1}`).innerText = v);
+    l.pf2.forEach((v,i) => document.getElementById(`pf2-${i+1}`).innerText = v);
+    l.pf3.forEach((v,i) => document.getElementById(`pf3-${i+1}`).innerText = v);
+    ['pb1','pb2','pb3'].forEach(id => document.getElementById(id).innerText = l.pbtn);
+
+    document.getElementById('contact-title').innerHTML  = l.contactTitle;
+    document.getElementById('contact-text').innerText   = l.contactText;
+    document.getElementById('s1-title').innerText       = l.s1Title;
+    document.getElementById('s1-desc').innerText        = l.s1Desc;
+    document.getElementById('label-name').innerText     = l.labelName;
+    document.getElementById('label-email').innerText    = l.labelEmail;
+    document.getElementById('btn-send-text').innerText  = l.btnSend;
+    document.getElementById('s2-title').innerText       = l.s2Title;
+    document.getElementById('s2-desc').innerText        = l.s2Desc;
+    document.getElementById('btn-verify-text').innerText = l.btnVerify;
+    document.getElementById('s3-title').innerText       = l.s3Title;
+    document.getElementById('s3-desc').innerText        = l.s3Desc;
+    document.getElementById('resend-label').innerText   = l.resendLabel;
+    document.getElementById('footer-text').innerText    = l.footer;
+
+    localStorage.setItem('lang', currentLang);
+}
+
+function toggleLanguage() {
+    currentLang = currentLang === 'en' ? 'ar' : currentLang === 'ar' ? 'fr' : 'en';
+    applyLanguage();
+}
+
+function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active-section'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active-section');
+    document.getElementById('nav-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+}
+
+// ===== OTP HELPERS =====
+function generateCode() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+function showAlert(id, msg, type) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.className = 'alert ' + type + ' show';
+}
+
+function hideAlert(id) {
+    document.getElementById(id).className = 'alert';
+}
+
+// ===== OTP CELL NAVIGATION =====
+document.addEventListener('DOMContentLoaded', () => {
+    for (let i = 0; i < 6; i++) {
+        const cell = document.getElementById('otp' + i);
+        cell.addEventListener('input', e => {
+            const val = e.target.value.replace(/\D/g,'');
+            e.target.value = val;
+            if (val) {
+                e.target.classList.add('filled');
+                if (i < 5) document.getElementById('otp' + (i+1)).focus();
+            } else {
+                e.target.classList.remove('filled');
+            }
+        });
+        cell.addEventListener('keydown', e => {
+            if (e.key === 'Backspace' && !cell.value && i > 0) {
+                document.getElementById('otp' + (i-1)).focus();
+            }
+        });
+        cell.addEventListener('paste', e => {
+            e.preventDefault();
+            const pasted = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'').slice(0,6);
+            for (let j = 0; j < pasted.length; j++) {
+                const c = document.getElementById('otp' + j);
+                if (c) { c.value = pasted[j]; c.classList.add('filled'); }
+            }
+        });
+    }
+    applyLanguage();
+});
+
+// ===== SEND CODE =====
+async function sendCode() {
+    const l = getLang();
+    const name  = document.getElementById('inp-name').value.trim();
+    const email = document.getElementById('inp-email').value.trim();
+
+    // Validate
+    if (name.length < 2) { showAlert('alert1', l.errName, 'error'); return; }
+    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRx.test(email)) { showAlert('alert1', l.errEmail, 'error'); return; }
+
+    // Check config
+    if (EMAILJS_SERVICE_ID === 'YOUR_SERVICE_ID' || EMAILJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID' || EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+        showAlert('alert1', l.errConfig, 'error');
+        return;
+    }
+
+    hideAlert('alert1');
+    const btn = document.getElementById('btn-send');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>' + l.btnSending;
+
+    generatedCode = generateCode();
+    currentName   = name;
+    currentEmail  = email;
+
+    try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            to_name:   name,
+            to_email:  email,
+            otp_code:  generatedCode,
+            gym_name:  'Amenzou Fitness'
+        });
+
+        // Move to step 2
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'block';
+        document.getElementById('dot1').classList.remove('active');
+        document.getElementById('dot2').classList.add('active');
+
+        showAlert('alert2', l.infoSent, 'info');
+        document.getElementById('otp0').focus();
+        startResendTimer();
+
+    } catch(err) {
+        console.error('EmailJS error:', err);
+        showAlert('alert1', l.errSend, 'error');
+        btn.disabled = false;
+        btn.innerHTML = '<span id="btn-send-text">' + l.btnSend + '</span>';
+    }
+}
+
+// ===== VERIFY CODE =====
+function verifyCode() {
+    const l = getLang();
+    let entered = '';
+    for (let i = 0; i < 6; i++) entered += document.getElementById('otp' + i).value;
+
+    if (entered.length < 6) { showAlert('alert2', l.errCode, 'error'); return; }
+    if (entered !== generatedCode) { showAlert('alert2', l.errWrong, 'error'); return; }
+
+    // Success!
+    clearInterval(resendTimer);
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step3').style.display = 'block';
+    document.getElementById('dot2').classList.remove('active');
+    document.getElementById('dot3').classList.add('active');
+}
+
+// ===== RESEND CODE =====
+async function resendCode() {
+    const l = getLang();
+    const btn = document.getElementById('resend-btn');
+    btn.disabled = true;
+    generatedCode = generateCode();
+
+    try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            to_name:  currentName,
+            to_email: currentEmail,
+            otp_code: generatedCode,
+            gym_name: 'Amenzou Fitness'
+        });
+        showAlert('alert2', l.infoSent, 'info');
+        for (let i = 0; i < 6; i++) {
+            const c = document.getElementById('otp' + i);
+            c.value = '';
+            c.classList.remove('filled');
+        }
+        document.getElementById('otp0').focus();
+        startResendTimer();
+    } catch(err) {
+        showAlert('alert2', l.errSend, 'error');
+        btn.disabled = false;
+    }
+}
+
+// ===== RESEND COUNTDOWN =====
+function startResendTimer() {
+    resendSeconds = 30;
+    const btn = document.getElementById('resend-btn');
+    const span = document.getElementById('resend-text');
+    btn.disabled = true;
+    clearInterval(resendTimer);
+
+    resendTimer = setInterval(() => {
+        resendSeconds--;
+        const l = getLang();
+        span.textContent = l.resendWait.replace('{s}', resendSeconds);
+        if (resendSeconds <= 0) {
+            clearInterval(resendTimer);
+            btn.disabled = false;
+            span.textContent = l.resendNow;
+        }
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
